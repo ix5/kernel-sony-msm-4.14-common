@@ -9,6 +9,9 @@ $GIT_CMD $REMOTE/kernel-sony-msm-4.14-common $BASEDIR/kernel/sony/msm-4.14/commo
 
 $GIT_CMD $REMOTE/kernel $BASEDIR/kernel/sony/msm-4.14/kernel -b aosp/LA.UM.7.1.r1
 
+# Need to remove existing dir
+rm -rf $BASEDIR/kernel/sony/msm-4.14/kernel/techpack/audio
+
 $GIT_CMD $REMOTE/kernel-techpack-audio $BASEDIR/kernel/sony/msm-4.14/kernel/techpack/audio -b aosp/LA.UM.7.1.r1
 $GIT_CMD $REMOTE/kernel-techpack-data-kernel $BASEDIR/kernel/sony/msm-4.14/kernel/techpack/data-kernel -b aosp/LA.UM.7.1.r1
 
