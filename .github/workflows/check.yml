@@ -1,38 +1,21 @@
-# This is a basic workflow to help you get started with Actions
-
-name: CI
+name: Kernel CI
 
 # Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ 71r1-github-actions ]
+    branches:
+      # TODO: Get rid of this, only run upon pull requests
+      - 71r1-github-actions
   pull_request:
-    branches: [ aosp/LA.UM.7.1.r1 ]
+    branches:
+      - aosp/LA.UM.7.1.r1
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "build"
-  setup:
-    # The type of runner that the job will run on
-    # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
-    runs-on: ubuntu-20.04
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-
-      - name: Echo GITHUB_WORKSPACE
-        run: echo $GITHUB_WORKSPACE
-        # /home/runner/work/kernel-sony-msm-4.14-common/kernel-sony-msm-4.14-common
-
   # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idcontainer
   kernel:
-    needs: setup
     runs-on: ubuntu-20.04
     container:
       image: ghcr.io/ix5/kernel-base
@@ -40,9 +23,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           path: common-kernel
-
-      - name: ls GITHUB_WORKSPACE
-        run: ls -la $GITHUB_WORKSPACE
 
       - name: Clone repos
         run: $GITHUB_WORKSPACE/common-kernel/clone-repos.sh
@@ -54,20 +34,27 @@ jobs:
         # TODO: Need a uses: or run: with entrypoint
         run: cd /srv/android/kernel/sony/msm-4.14/common-kernel/ && /bin/bash /srv/android/kernel/sony/msm-4.14/common-kernel/build-kernels-ci.sh
 
-      - name: Archive log
+      - name: Archive logs
         uses: actions/upload-artifact@v2
         with:
-          name: log-apollo
-          path: /srv/android/out/ci.sh/build.log
+          name: build-logs
+          path: /srv/android/out/ci-clang/kernel-tmp/build_*.log
 
-      - name: Archive apollo dtbo
-        uses: actions/upload-artifact@v2
-        with:
-          name: dtbo-apollo
-          path: /srv/android/kernel/sony/msm-4.14/common-kernel/dtbo-apollo.img
+      # Only for testing: use the img from common-kernel instead
+      #- name: Archive apollo kernel image from build dir
+      #  uses: actions/upload-artifact@v2
+      #  with:
+      #    name: kernel-image-apollo
+      #    path: /srv/android/out/ci-clang/kernel-tmp/arch/arm64/boot/Image.gz-dtb
 
-      - name: Archive apollo kernel image from build dir
+      - name: Archive kernel images
         uses: actions/upload-artifact@v2
         with:
-          name: kernel-image-apollo
-          path: /srv/android/out/ci.sh/arch/arm64/boot/Image.gz-dtb
+          name: kernel-images
+          path: /srv/android/kernel/sony/msm-4.14/common-kernel/kernel-dtbo-*
+
+      - name: Archive dtbos
+        uses: actions/upload-artifact@v2
+        with:
+          name: kernel-dtbos
+          path: /srv/android/kernel/sony/msm-4.14/common-kernel/dtbo-*.img

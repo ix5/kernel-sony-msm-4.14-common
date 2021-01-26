@@ -62,7 +62,7 @@ for platform in $PLATFORMS; do \
                      CROSS_COMPILE=aarch64-linux-android- \
                      CROSS_COMPILE_ARM32=arm-linux-androideabi- \
                      -j$(nproc) ${BUILD_ARGS} ${CC:+CC="${CC}"} \
-                     >"$KERNEL_TMP"/build.log 2>&1;
+                     >"$KERNEL_TMP"/build_${device}.log 2>&1;
 
                 echo "Copying new kernel image ..."
                 cp "$KERNEL_TMP/arch/arm64/boot/Image.gz-dtb" "$KERNEL_TOP/common-kernel/kernel-dtb-$device"

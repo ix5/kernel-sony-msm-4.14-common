@@ -53,16 +53,14 @@ SEINE="pdx201"
 
 PLATFORMS="yoshino nile ganges tama kumano seine"
 
-# FIXME override
-TAMA="apollo"
-PLATFORMS="tama"
-
 # Mkdtimg tool
 MKDTIMG=$ANDROID_ROOT/out/host/linux-x86/bin/mkdtimg
 
 KERNEL_TOP=$ANDROID_ROOT/kernel/sony/msm-4.14
 # $KERNEL_TMP sub dir per script
-KERNEL_TMP=${build_directory:-$ANDROID_ROOT/out/${0##*-}/kernel-tmp}
+VARIANT=${0##*-} # Strip "build-shared-" prefix
+VARIANT=${VARIANT%.sh} # Strip ".sh" suffix
+KERNEL_TMP=${build_directory:-$ANDROID_ROOT/out/$VARIANT/kernel-tmp}
 
 export PATH=$PATH:$ANDROID_ROOT/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin
 export PATH=$PATH:$ANDROID_ROOT/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin
