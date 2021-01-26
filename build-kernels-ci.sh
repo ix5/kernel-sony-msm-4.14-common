@@ -1,6 +1,7 @@
 #!/bin/sh
 
-. "${0%/*}/build_shared_vars.sh -k true -d apollo"
+#. "${0%/*}/build_shared_vars.sh -k true -d apollo"
+. "${0%/*}/build_shared_vars.sh"
 
 export CLANG=$ANDROID_ROOT/prebuilts/clang/host/linux-x86/clang-r353983c/bin/
 

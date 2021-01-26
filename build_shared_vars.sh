@@ -53,6 +53,10 @@ SEINE="pdx201"
 
 PLATFORMS="yoshino nile ganges tama kumano seine"
 
+# FIXME override
+TAMA="apollo"
+PLATFORMS="tama"
+
 # Mkdtimg tool
 MKDTIMG=$ANDROID_ROOT/out/host/linux-x86/bin/mkdtimg
 
