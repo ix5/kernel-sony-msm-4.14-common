@@ -5,7 +5,7 @@ BASEDIR="/srv/android"
 mkdir -p $BASEDIR/kernel/sony/msm-4.14/
 
 $GIT_CMD $REMOTE/device-sony-common-headers $BASEDIR/kernel/sony/msm-4.14/common-headers -b aosp/LA.UM.7.1.r1
-$GIT_CMD $REMOTE/kernel-sony-msm-4.14-common $BASEDIR/kernel/sony/msm-4.14/common-kernel -b aosp/LA.UM.7.1.r1
+#$GIT_CMD $REMOTE/kernel-sony-msm-4.14-common $BASEDIR/kernel/sony/msm-4.14/common-kernel -b aosp/LA.UM.7.1.r1
 
 $GIT_CMD $REMOTE/kernel $BASEDIR/kernel/sony/msm-4.14/kernel -b aosp/LA.UM.7.1.r1
 
