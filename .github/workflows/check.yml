@@ -47,9 +47,9 @@ jobs:
         run: mv $GITHUB_WORKSPACE/common-kernel/ /srv/android/kernel/sony/msm-4.14/common-kernel/
 
       - name: Clone repos
-        with:
-          entrypoint: $GITHUB_WORKSPACE/clone-repos.sh
+        run: $GITHUB_WORKSPACE/clone-repos.sh
 
       #- name: Run kernel CI script
+      #  TODO: Need a uses: or run: with entrypoint
       #  with:
       #    entrypoint: /srv/android/kernel/sony/msm-4.14/common-kernel/build-kernel-ci.sh
