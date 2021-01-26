@@ -14,6 +14,7 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+jobs:
   # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idcontainer
   kernel:
     runs-on: ubuntu-20.04
