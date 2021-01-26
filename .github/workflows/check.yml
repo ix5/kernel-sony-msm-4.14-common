@@ -44,11 +44,11 @@ jobs:
       - name: ls GITHUB_WORKSPACE
         run: ls -la $GITHUB_WORKSPACE
 
-      - name: Move checked out repo to /srv/android
-        run: mv $GITHUB_WORKSPACE/common-kernel/ /srv/android/kernel/sony/msm-4.14/common-kernel/
-
       - name: Clone repos
         run: $GITHUB_WORKSPACE/clone-repos.sh
+
+      - name: Move checked out repo to /srv/android
+        run: mv $GITHUB_WORKSPACE/common-kernel/ /srv/android/kernel/sony/msm-4.14/common-kernel/
 
       #- name: Run kernel CI script
       #  TODO: Need a uses: or run: with entrypoint
