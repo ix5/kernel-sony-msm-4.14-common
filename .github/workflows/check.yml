@@ -45,12 +45,23 @@ jobs:
         run: ls -la $GITHUB_WORKSPACE
 
       - name: Clone repos
-        run: $GITHUB_WORKSPACE/clone-repos.sh
+        run: $GITHUB_WORKSPACE/common-kernel/clone-repos.sh
 
       - name: Move checked out repo to /srv/android
         run: mv $GITHUB_WORKSPACE/common-kernel/ /srv/android/kernel/sony/msm-4.14/common-kernel/
 
-      #- name: Run kernel CI script
-      #  TODO: Need a uses: or run: with entrypoint
-      #  with:
-      #    entrypoint: /srv/android/kernel/sony/msm-4.14/common-kernel/build-kernel-ci.sh
+      - name: Run kernel CI script
+        # TODO: Need a uses: or run: with entrypoint
+        run: /srv/android/kernel/sony/msm-4.14/common-kernel/build-kernel-ci.sh
+
+      - name: Archive apollo dtbo
+        uses: actions/upload-artifact@v2
+        with:
+          name: dtbo-apollo
+          path: /srv/android/kernel/sony/msm-4.14/common-kernel/dtbo-apollo.img
+
+      - name: Archive apollo kernel image from build dir
+        uses: actions/upload-artifact@v2
+        with:
+          name: kernel-image-apollo
+          path: /srv/android/out/ci.sh/arch/arm64/boot/Image.gz-dtb
