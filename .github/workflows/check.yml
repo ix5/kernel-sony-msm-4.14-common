@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  setup:
     # The type of runner that the job will run on
     # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
     runs-on: ubuntu-20.04
@@ -26,18 +26,30 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
       - name: Echo GITHUB_WORKSPACE
         run: echo $GITHUB_WORKSPACE
+        # /home/runner/work/kernel-sony-msm-4.14-common/kernel-sony-msm-4.14-common
 
   # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idcontainer
-  #kernel:
-  #  container:
-  #    image: ghcr.io/ix5/android-base
-  #  steps:
-  #    - name: Run kernel CI script
-  #      with:
-  #        entrypoint: $GITHUB_WORKSPACE/build-kernel-ci.sh
+  kernel:
+    needs: setup
+    container:
+      image: ghcr.io/ix5/kernel-base
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          path: common-kernel
+
+      - name: ls GITHUB_WORKSPACE
+        run: ls -la $GITHUB_WORKSPACE
+
+      - name: Move checked out repo to /srv/android
+        run: mv $GITHUB_WORKSPACE/common-kernel/ /srv/android/kernel/sony/msm-4.14/common-kernel/
+
+      - name: Clone repos
+        with:
+          entrypoint: $GITHUB_WORKSPACE/clone-repos.sh
+
+      #- name: Run kernel CI script
+      #  with:
+      #    entrypoint: /srv/android/kernel/sony/msm-4.14/common-kernel/build-kernel-ci.sh
