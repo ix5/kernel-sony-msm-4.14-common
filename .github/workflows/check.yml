@@ -52,7 +52,13 @@ jobs:
 
       - name: Run kernel CI script
         # TODO: Need a uses: or run: with entrypoint
-        run: /srv/android/kernel/sony/msm-4.14/common-kernel/build-kernel-ci.sh
+        run: /srv/android/kernel/sony/msm-4.14/common-kernel/build-kernels-ci.sh
+
+      - name: Archive log
+        uses: actions/upload-artifact@v2
+        with:
+          name: log-apollo
+          path: /srv/android/out/ci.sh/build.log
 
       - name: Archive apollo dtbo
         uses: actions/upload-artifact@v2
