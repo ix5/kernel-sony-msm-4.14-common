@@ -33,6 +33,7 @@ jobs:
   # https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idcontainer
   kernel:
     needs: setup
+    runs-on: ubuntu-20.04
     container:
       image: ghcr.io/ix5/kernel-base
     steps:
